@@ -1,0 +1,145 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Rocketseat challenge documentation",
+        "description": "Challenge to create and update user information",
+        "version": "1.0.0",
+        "contact": {
+            "email": "gustavofreitas10@hotmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a new user.",
+                "description": "This route check's if the new user already exists. If not, then proceed to create.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "User",
+                        "required": true,
+                        "type": "string",
+                        "minimum": 1,
+                        "description": "User object that will be created.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "name": "XPTO",
+                                    "email": "XPTO@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created"
+                    },
+                    "400": {
+                        "description": "User not created, check the fields."
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Return all users.",
+                "description": "This route check's if the user exists and if it is admin. If yes, then return all users from the system.",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "user_id",
+                        "required": true,
+                        "type": "string",
+                        "minimum": 1,
+                        "description": "The admin ID."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User found."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Return a single user.",
+                "description": "This route check's if the user exists. If exists, then return the user's information.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "minimum": 1,
+                        "description": "The user ID."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User found."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        },
+        "/users/{id}/admin": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Make a non-admin user as an admin.",
+                "description": "This route check's if the user exists and if it's not an admin. If yes, then make the user admin and return the user's information.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "minimum": 1,
+                        "description": "The user ID."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User is now an admin."
+                    },
+                    "400": {
+                        "description": "Error: User already is an admin."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        }
+    }
+}
